@@ -109,7 +109,7 @@ we have 5.5 turns with 25mm turn spacing, so the distance from the lowest wire c
 <br>
 In my search, I found that a squeeze bottle of Old El Paso taco sauce was just about perfect.  
 The diameter averages 51mm and it's height is more than enough.  
-You can even flip it and remove the cap so there's clearance arond the connector.
+You can even flip it and remove the cap so there's clearance around the connector.
 
 {:style="clear:right"}
 
@@ -188,7 +188,7 @@ Tacotenna -> SawBird GOES+ -> SMA -> SDR
 The first attempt bore no fruit. I was using SDR++ to record the baseband signal while watching the FFT waterfall to guide my aiming of the dish.
 ![](/assets/images/hrpt_001/Screenshot_2024-07-14_11-52-02.png)
 
-Settings used for SDR++ for NOAA19 scan:
+Settings used for SDR++ for NOAA 19 scan:
  * set frequency for NOAA 19 HRPT to 1.698GHz
  * set bandwidth (default 256KHz) to 2.56MHz
  * enable RTL AGC (automatic gain control)
@@ -209,9 +209,9 @@ Unfortunately, due to the commotion of success, I don't have any screenshots of 
  * then start the processing.
 
 When it detects signal, it will automatically start converting to the image data. There's still a way to record the baseband signal, but it is not required.
-I was also happy to see that it saved all channel data in labelled folders and subfolders for the specific scan attempt. 
+I was also happy to see that it saved all channel data in labelled folders and sub-folders for the specific scan attempt. 
 
-SatDump was easier to pinpoint the aim. Generally wave around until you get the 2d spectrogram to separate into cicles, and then fine tune while watching the SNR.
+SatDump was easier to pinpoint the aim. Generally wave around until you get the 2d spectrogram to separate into circles, and then fine tune while watching the SNR.
 My highest SNR was 8.14, but the high-average was about 6 and I spent a while around 1-3/
 Seemed to start getting a second burst but only for a second. At the end of the track I had to do big rotations for the dish to pick up a signal.
 
@@ -235,7 +235,7 @@ I'll want to figure out a better way to position the dish; it's a little cumbers
 With my current SNR, it is difficult to fine-tune the dish orientation using the waterfall alone. Luckily, the demodulator in SatDump provides valuable visual feedback.
 That said, I still had some issues tracking it by hand.
 
-After having experience with the continuous APT signals being beamed, it was odd to deal with a signal that seemed to be transmitted in bursts. When the signal cut out, I would wave around to regain a non-existant signal
+After having experience with the continuous APT signals being beamed, it was odd to deal with a signal that seemed to be transmitted in bursts. When the signal cut out, I would wave around to regain a non-existent signal
 
 ![](/assets/images/hrpt_001/lost.gif){:width="300px"}
 

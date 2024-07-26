@@ -1,0 +1,102 @@
+---
+layout: post
+title:  "HRIT GOES!"
+date:   2024-07-24 22:56:24 -0400
+categories: antenna hrit goes geostationary satellite
+---
+
+Several years ago, I watched a video that kick-started my interest in satellite communications. It was none other than [The Thought Emporium](https://www.youtube.com/watch?v=jGWFg7EDnyY). I collected hardware over the years according to [this other guide](https://www.rtl-sdr.com/rtl-sdr-com-goes-16-17-and-gk-2a-weather-satellite-reception-comprehensive-tutorial/), and made a few fruitless attempts at receiving data from [GOES 16](https://eospso.nasa.gov/missions/geostationary-operational-environmental-satellite-16). But after finding success with HRPT signals, it was time to try again.
+
+A review of the hardware used:
+ * 2.4 GHz wifi grid antenna
+ * 2.5 cm spacer for the reflector
+ * SDR (I used [SMArTee](https://www.nooelec.com/store/sdr/sdr-receivers/smart/nesdr-smartee-xtr-sdr.html))
+ * LNA/Filter (I used [SawBird GOES+](https://www.nooelec.com/store/sdr/sdr-addons/sawbird/sawbird-plus-goes.html))
+ * USB extension
+ * Laptop running [SatDump](https://www.satdump.org/)
+ * Phone running [Look4Sat](https://github.com/rt-bishop/Look4Sat)
+
+A photo of the 2.5cm spacer I built to modify the grid antenna's frequency from 2.4GHz to 1.7GHz.
+![Image of 2.5cm spacer for grid antenna](/assets/images/hrit_001/spacer.jpg)
+
+And a photo of a completely professional radio telescope lab. Note that the antenna's feed is converted to SMA, then run through the lna/filter and directly into the SDR as closely as possible to prevent losses. From there the USB cable extends to the laptop. The USB port provides enough power for both the SDR as well as the lna/filter through Bias-T.
+![Completely professional radio lab setup](/assets/images/hrit_001/setup.jpg)
+
+SatDump configuration:
+ * frequency: 1.6941 GHz
+ * decimation: 1
+ * samplerate: 2.56 Mbps
+ * turn on automatic gain control
+ * the bias T is automatically enabled in this SDR's hardware, but you can enable the checkbox.
+
+After turning on the SDR open processing, select "GOES-R HRIT", and click start.
+
+After finding the general direction and skew for the antenna, the aim can be fine tuned by observing the Demodulator graph (bottom left in the following image). The better your reception, the more the dots group into two circles. The signal to noise ratio could definitely use some improvement but this was good enough to scrape some almost-complete data.
+
+![SatDump capturing from GOES 16](/assets/images/hrit_001/Screenshot_2024-07-20_14-27-02.png)
+
+Luckily, the signal provides a description of the ensuing data:
+
+```
+The GOES-16 HRIT/EMWIN East broadcast utilizes virtual channels for the transmission of
+several simultaneous data streams. The table below identifies the current
+virtual channels assignments. 
+
+    HRIT/EMWIN
+Virtual Channel ID     Group          Product Name
+------------------    -------    -------------------------------
+        0              Imagery     Admin Text Messages
+        1             *Imagery     Mesoscale 0.5 – 2km (ch. 2, 7 and 13)
+        2             *Imagery     Band 2 - Visual                                                       
+        7             *Imagery     Band 7 - Shortwave Infrared
+        8             *Imagery     Band 8 – Mid-Level Tropospheric Water Vapor
+        9             *Imagery     Band 9 – Upper-level Tropospheric Water Vapor
+       13             *Imagery     Band 13 – Clean Longwave Infrared
+       14             *Imagery     Band 14 – Infrared Longwave 
+       15             *Imagery     Band 15 – Dirty Longwave Infrared
+       17             *Imagery     Band 13 – GOES-18 4km Clean Longwave Infrared 
+       20              EMWIN       High Priority
+       21              EMWIN       Graphics
+       22              EMWIN       Low Priority
+       24              Imagery     NHC Maritime Graphic Products
+       25             *Imagery     Other GOES-16 Level II Products 
+       30              DCS         DCS Admin                                                                              
+       32              DCS         DCS Data New Format
+
+*NOTE* - Data Quality Flags are not made available for any of the GOES Imagery products.
+
+For additional broadcast information or questions please visit https://www.noaasis.noaa.gov/ or contact the
+HRIT/EMWIN Broadcast Manager at hrit.manager@noaa.gov.
+```
+
+Along with the main sensor data, the stream also includes a bunch of additional data and maps. The South-Eastern USA was considered a priority when this scan took place:
+
+![Dominant waves map](/assets/images/hrit_001/20240720170000-atl48per_latest.lrit.gif)
+![Florida false colour](/assets/images/hrit_001/abi_rgb_GEO_False_Color_map.png)
+![Florida IR](/assets/images/hrit_001/abi_rgb_Clean_Longwave_IR_Window_Band_map.png)
+![Florida EMWIN animation](/assets/images/hrit_001/emwin_florida.gif)
+![Florida EMWIN animation](/assets/images/hrit_001/Z_EINA00KWBC200515_C_KWIN_20240720171541_511887-4-G16CIRUS.gif)
+
+I'm not sure how the schedule works, but sometimes you can also grab images that are relayed from other satellites around the world. A few examples:
+
+![Relayed METEOSAT](/assets/images/hrit_001/Z_EIIO00KWBC200715_C_KWIN_20240720191547_517975-4-INDCIRUS.JPG)
+![Relayed HIMAWARI](/assets/images/hrit_001/Z_EIPQ00KWBC200500_C_KWIN_20240720170050_510871-4-GMS008JA.GIF)
+![Relayed GOES 18 animation](/assets/images/hrit_001/goes18.gif)
+
+After running the experiment for several hours, there was a wind-related mishap (stay tuned for another post). But for the time I scanned, I was able to pick up several transmissions. It's a little glitchy and scaled down, but here's an animation of the false colour images:
+
+![Filming Earth](/assets/images/hrit_001/abi_rgb_GEO_False_Color.gif)
+If you look near the centre, you can see the reflection of the sun.
+
+And an animation of the mid-level troposphere water vapour:
+![Water vapour in mid-level Troposphere animation](/assets/images/hrit_001/abi_rgb_Mid-level_Tropospheric_Water_Vapor_map.gif)
+
+To show the scale and beauty of these results, here are two full-resolution images direct from SatDump. Click on them to open directly.
+
+The grey marble (Band 2 Visible)
+
+[![Grey marble](/assets/images/hrit_001/G16_2_20240720T193021Z_small.png)](/assets/images/hrit_001/G16_2_20240720T193021Z.png){:target="_blank"}
+
+The blue marble (false colour)
+
+[![Blue marble](/assets/images/hrit_001/abi_rgb_GEO_False_Color_07_small.png)](/assets/images/hrit_001/abi_rgb_GEO_False_Color_07.png){:target="_blank"}
